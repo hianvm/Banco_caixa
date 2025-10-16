@@ -1,0 +1,7 @@
+SELECT C.ClienteNome AS Nome, C.ClienteSobrenome AS Sobrenome
+FROM Clientes AS C
+
+-- Desc = descrecente 
+-- Asc ou não colocar que vai automatico em crescente
+
+ORDER BY 1
