@@ -1,0 +1,28 @@
+-- Like é usado para filtrar
+-- Case When
+SELECT ClienteNome, ClienteSobrenome FROM Clientes
+WHERE ClienteSobrenome LIKE '%an'    --Se quiser o começo o % Vem no final, se quiser o final o % vem primeiro, ou seja 'Y%' = Yan, Yang etc... '%an' = Luan, Jordan, etc... e se quiser a parte do meio %rd%
+-- Ao colocarmos o NOT antes do LIKE, ele vai filtrar para o não ter 
+
+SELECT ClienteRua FROM Clientes
+WHERE ClienteRua LIKE '__a%';
+
+SELECT CLienteRua From dbo.Clientes Where ClienteRua
+LIKE '[A-Z]ARANA'
+
+
+SELECT CLienteRua From dbo.Clientes Where ClienteRua
+LIKE '[0-9]%'
+
+SELECT ClienteNome, ClienteSexo,
+Case 
+    When ClienteNome Like '%a'                                          --Case When é como se fosse o IF
+        then 'Feminino'
+    When ClienteNome Like '%e' OR ClienteNome Like '%o' Then 'Masculino'    --Then define o que será 
+    else 'Outros'
+END AS Sexo 
+FROM Clientes
+
+
+Where ClienteRendaAnual >= 0 AND ClienteRendaAnual <= 100000
+    And ClienteRendaAnual BETWEEN 0 And 100000    --BETWEEN é utilizado como 'entretanto', como Saturday is the day between Friday and Sunday.// Sábado é o dia entre sexta-feira e domingo.
