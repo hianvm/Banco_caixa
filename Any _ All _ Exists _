@@ -1,0 +1,65 @@
+-- SUBCONSULTA 
+
+SELECT * FROM Clientes
+WHERE ClienteCodigo in
+    (
+    SELECT  ClienteCodigo FROM CartaoCredito
+    )
+
+
+
+
+SELECT * FROM Clientes, CartaoCredito
+WHERE Clientes.ClienteCodigo                   --Trabalhar com duas tabelas 
+=CartaoCredito.ClienteCodigo
+
+
+
+
+SELECT * FROM Clientes
+WHERE ClienteCodigo not in                  --Para clientes que não possuem o cartão de crédito ( NOT )
+    (
+    SELECT  ClienteCodigo FROM CartaoCredito
+    )
+
+
+
+SELECT * FROM  Contas AS CS           -- AS CS ( alternado o nome de contas para CS)          /           -- AS CC ( alternado o nome de CartaoCredito para CC)
+where exists 
+    (
+    SELECT * fROM CartaoCredito AS CC                   --Where ***EXISTS***    para verificar se existe
+    where CS.AgenciaCodigo=CC.AgenciaCodigo
+        And CS.ClienteCodigo=CC.ClienteCodigo
+        And CS.ContaNumero=cc.ContaNumero
+    )   
+
+
+
+SELECT * FROM  Contas AS CS           
+where not exists               -- Where ***NOT*** Exists, para que não exista
+    (
+    SELECT * fROM CartaoCredito AS CC 
+    where CS.AgenciaCodigo=CC.AgenciaCodigo
+        And CS.ClienteCodigo=CC.ClienteCodigo
+        And CS.ContaNumero=cc.ContaNumero
+    )   
+
+
+
+SELECT ClienteNome
+FROM Clientes
+WHERE ClienteCodigo = Any                         --**ANY** Pode aparecer somente um dos números (50,142, 195) que ele retornará mesmo que não mostre os demais, ex: aparece o 50 mas ñ aparece o 195, ele ainda mostrará o resultado
+   (Select ClienteCodigo
+   FROM CartaoCredito
+   WHERE ClienteCodigo in (50,142, 195)
+   )
+
+
+
+SELECT ClienteNome
+FROM Clientes
+WHERE ClienteCodigo = ALL                        --**ALL** Precisa estar presente todos os números solicitados (50,142, 195), caso tenha o 50 mas não tenha o 142, ele não aparece, ou seja, os três números precisam estar presentes
+   (Select ClienteCodigo
+   FROM CartaoCredito
+   WHERE ClienteCodigo in (50,142, 195)
+   )
